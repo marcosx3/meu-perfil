@@ -1,0 +1,15 @@
+{
+    "name": "marcos/perfil",
+    "autoload": {
+        "psr-4": {
+            "Marcos\\Perfil\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "marcosx3",
+            "email": "marcos-oliveirasilva@hotmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfólio de Marcos Oliveira</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg-color: #111827;
+      --text-color: #facc15;
+      --card-bg: #1f2937;
+      --nav-bg: #1f2937;
+    }
+    [data-theme="light"] {
+      --bg-color: #f8f9fa;
+      --text-color: #333;
+      --card-bg: #ffffff;
+      --nav-bg: #ffffff;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Roboto', sans-serif;
+      transition: .3s;
+    }
+    header, footer {
+      background-color: var(--nav-bg);
+      transition: .3s;
+    }
+    .project-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      transition: transform .3s, background .3s;
+    }
+    .project-card:hover {
+      transform: translateY(-7px);
+    }
+    .btn-theme {
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-color);
+      font-size: 1.4rem;
+    }
+
+    #canal_denuncias {
+      color: var(--text-color);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="p-3 fixed-top shadow-sm">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h1 class="fw-bold m-0">Marcos Oliveira</h1>
+
+    <nav>
+      <ul class="nav">
+        <li class="nav-item"><a href="#about" class="nav-link text-warning fw-bold">Sobre</a></li>
+        <li class="nav-item"><a href="#projects" class="nav-link text-warning fw-bold">Projetos</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link text-warning fw-bold">Contato</a></li>
+      </ul>
+    </nav>
+
+    <!-- Botão Dark/Light -->
+    <button class="btn-theme" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+</header>
+
+<div style="padding-top: 80px;"></div>
+
+<main class="container py-5">
+
+<!-- SOBRE -->
+<section id="about" class="my-5">
+  <div class="row align-items-center">
+    <div class="col-md-4 text-center mb-4">
+      <img src="https://placehold.co/200x200" class="rounded-circle img-fluid shadow">
+    </div>
+    <div class="col-md-8">
+      <h2 class="fw-bold mb-3">Sobre Mim</h2>
+      <p class="fs-5">
+        Sou desenvolvedor backend especializado em soluções financeiras de alta confiabilidade. 
+        Atuo na construção e sustentação de plataformas com focos em ERP, CRM, garantindo 
+        escalabilidade, segurança e performance, geração de valor através de dados.
+      </p>
+      <p class="fs-5">
+        Tecnologias principais: <strong>PHP</strong>, <strong>MySQL</strong>, <strong>Java</strong>, <strong>Bash</strong>, <strong>APIs REST</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projects" class="my-5">
+  <h2 class="fw-bold mb-4">Projetos</h2>
+  <div class="row g-4">
+
+    <div class="col-md-6 col-lg-4">
+      <div class="project-card shadow">
+        <img src="./assets/erp_restrito.png" class="img-fluid rounded mb-3">
+        <h3 class="fw-bold">ERP Comissionamento</h3>
+        <p>ERP interno para cálculo automático de comissões multi-nível, analise de resultados e gerenciamento de demais áreas.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="project-card shadow">
+         <img src="./assets/lms_restrito.png" class="img-fluid rounded mb-3">
+        <h3 class="fw-bold">LMS</h3>
+        <p>Sistema para disponibilização de cursos, onde a empresa pode vender cursos e disponibilizar para os colaboradores.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="project-card shadow">
+        <img src="./assets/compliance.png" class="img-fluid rounded mb-3">
+        <h3 class="fw-bold">Canal de denuncias</h3>
+        <p>Canal de denuncias para Compliance empresarial.</p>
+        <a id="canal_denuncias" href="https://github.com/marcosx3/compliance">Venha Conferir</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contact" class="text-center my-5">
+  <h2 class="fw-bold mb-4">Contato</h2>
+
+  <div class="d-flex justify-content-center gap-4 fs-1">
+    <a href="https://wa.me/5531997760109" target="_blank" class="text-warning"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.linkedin.com/in/marcosoliveirassilva/" target="_blank" class="text-warning"><i class="fab fa-linkedin"></i></a>
+    <a href="https://github.com/marcosx3" target="_blank" class="text-warning"><i class="fab fa-github"></i></a>
+    <a href="mailto:marcos-oliveirasilva@hotmail.com" class="text-warning"><i class="fas fa-envelope"></i></a>
+  </div>
+</section>
+
+</main>
+
+<footer class="text-center p-3">
+  © 2025 Marcos Oliveira. Todos os direitos reservados.
+</footer>
+
+<script>
+  const toggle = document.getElementById("themeToggle");
+  const body = document.body;
+
+  toggle.onclick = () => {
+    const current = body.getAttribute("data-theme");
+    body.setAttribute("data-theme", current === "light" ? "dark" : "light");
+    toggle.innerHTML = current === "light" ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  };
+</script>
+
+</body>
+</html>
