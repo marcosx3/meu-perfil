@@ -3,183 +3,752 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfólio de Marcos Oliveira</title>
+  <title>Marcos Oliveira — Backend Developer</title>
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-  <!-- Fonte -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --bg-color: #111827;
-      --text-color: #facc15;
-      --card-bg: #1f2937;
-      --nav-bg: #1f2937;
+      --bg:        #0d0f12;
+      --surface:   #13161b;
+      --surface2:  #1a1e25;
+      --border:    rgba(255,255,255,0.07);
+      --accent:    #f5c518;
+      --accent-dim:#c29a0e;
+      --text:      #e8e6df;
+      --muted:     #7a7972;
+      --radius:    12px;
     }
     [data-theme="light"] {
-      --bg-color: #f8f9fa;
-      --text-color: #333;
-      --card-bg: #ffffff;
-      --nav-bg: #ffffff;
-    }
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Roboto', sans-serif;
-      transition: .3s;
-    }
-    header, footer {
-      background-color: var(--nav-bg);
-      transition: .3s;
-    }
-    .project-card {
-      background-color: var(--card-bg);
-      border-radius: 10px;
-      padding: 20px;
-      transition: transform .3s, background .3s;
-    }
-    .project-card:hover {
-      transform: translateY(-7px);
-    }
-    .btn-theme {
-      cursor: pointer;
-      border: none;
-      background: none;
-      color: var(--text-color);
-      font-size: 1.4rem;
+      --bg:        #f5f3ee;
+      --surface:   #ffffff;
+      --surface2:  #eceae4;
+      --border:    rgba(0,0,0,0.09);
+      --accent:    #b8860b;
+      --accent-dim:#8a6308;
+      --text:      #1a1a18;
+      --muted:     #8a8880;
     }
 
-    #canal_denuncias {
-      color: var(--text-color);
-      text-decoration: underline;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      transition: background .4s, color .4s;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      transition: background .4s;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px; font-weight: 500;
+      color: var(--accent); text-decoration: none;
+      letter-spacing: .04em;
+    }
+    .nav-logo span { color: var(--muted); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500;
+      color: var(--muted); text-decoration: none;
+      letter-spacing: .06em; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-controls { display: flex; align-items: center; gap: 1rem; }
+    .lang-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; font-weight: 500;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 4px 12px;
+      border-radius: 99px; cursor: pointer;
+      transition: all .2s; letter-spacing: .06em;
+    }
+    .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 16px;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: all .2s;
+    }
+    .theme-btn:hover { color: var(--accent); background: var(--surface2); }
+    .hamburger {
+      display: none; background: none; border: none;
+      cursor: pointer; color: var(--text); font-size: 20px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 4rem;
+      padding-top: 60px;
+    }
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .hero-tag::before {
+      content: ''; width: 24px; height: 1px; background: var(--accent);
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      line-height: 1.1; margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--accent);
+    }
+    .hero-desc {
+      font-size: 17px; color: var(--muted);
+      line-height: 1.8; margin-bottom: 2rem;
+      max-width: 440px;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: #0d0f12;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 12px 28px; border-radius: 99px;
+      transition: all .25s; border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--accent-dim); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 12px 28px; border-radius: 99px;
+      transition: all .25s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-image {
+      display: flex; justify-content: flex-end; align-items: center;
+    }
+    .hero-photo-wrap {
+      position: relative; width: 320px; height: 380px;
+    }
+    .hero-photo-wrap::before {
+      content: '';
+      position: absolute; top: 16px; left: 16px; right: -16px; bottom: -16px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius); opacity: .4;
+    }
+    .hero-photo-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      position: relative; z-index: 1;
+      filter: grayscale(20%);
+    }
+    .tech-badges {
+      position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 10px 14px;
+    }
+    .badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; padding: 3px 10px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 99px; color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-divider {
+      width: 40px; height: 2px; background: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: start;
+    }
+    .about-text p {
+      color: var(--muted); margin-bottom: 1.2rem; font-size: 16px;
+    }
+    .about-text p strong { color: var(--text); }
+    .skills-list { margin-top: 2rem; }
+    .skills-list h3 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem;
+    }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .skill-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; padding: 5px 14px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 99px; color: var(--text);
+      transition: all .2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem; color: var(--accent);
+      line-height: 1; margin-bottom: .5rem;
+    }
+    .stat-label {
+      font-size: 13px; color: var(--muted);
+    }
+    .about-quote {
+      grid-column: 1 / -1;
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 1.5rem 2rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px; color: var(--text);
+      font-style: italic;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .3s, border-color .3s;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+    }
+    .project-img {
+      width: 100%; aspect-ratio: 16/9;
+      object-fit: cover;
+      background: var(--surface2);
+      display: block;
+    }
+    .project-img-placeholder {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .project-img-placeholder i {
+      font-size: 2rem; color: var(--border);
+    }
+    .project-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; color: var(--accent);
+      margin-bottom: .5rem; letter-spacing: .08em;
+    }
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; margin-bottom: .8rem;
+    }
+    .project-desc {
+      font-size: 14px; color: var(--muted);
+      line-height: 1.6; flex: 1;
+    }
+    .project-footer {
+      margin-top: 1.2rem; padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .project-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; padding: 2px 8px;
+      background: var(--surface2); border-radius: 99px; color: var(--muted);
+    }
+    .project-link {
+      color: var(--accent); font-size: 18px;
+      text-decoration: none; transition: transform .2s;
+    }
+    .project-link:hover { transform: translate(3px,-3px); }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .contact-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 1rem;
+    }
+    .contact-text p { color: var(--muted); margin-bottom: 2rem; }
+    .social-links { display: flex; flex-direction: column; gap: .8rem; }
+    .social-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); text-decoration: none;
+      color: var(--text); transition: all .2s;
+    }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); transform: translateX(6px); }
+    .social-link i {
+      width: 20px; text-align: center; font-size: 18px;
+    }
+    .social-name { font-size: 14px; font-weight: 500; }
+    .social-handle { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      max-width: 1100px; margin: 0 auto;
+      padding: 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted);
+      flex-wrap: wrap; gap: 1rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+    .fade-in:nth-child(2) { transition-delay: .1s; }
+    .fade-in:nth-child(3) { transition-delay: .2s; }
+    .fade-in:nth-child(4) { transition-delay: .3s; }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none; flex-direction: column;
+      position: fixed; top: 60px; left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem; gap: 1rem; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 14px; color: var(--muted);
+      text-decoration: none; padding: .5rem 0;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 80px; text-align: center; min-height: auto; padding-bottom: 3rem; }
+      .hero-image { display: none; }
+      .hero-cta { justify-content: center; }
+      .hero-tag { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; padding: 2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      footer { justify-content: center; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 4rem 1.2rem; }
+      .stat-card { padding: 1rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
-
 <body>
 
-<header class="fixed-top shadow-sm">
-  <nav class="navbar navbar-expand-lg" style="background-color: var(--nav-bg);">
-    <div class="container">
-
-      <!-- Nome -->
-      <a class="navbar-brand fw-bold text-warning" href="#">Marcos Oliveira</a>
-
-      <!-- Botão Menu Mobile -->
-      <button class="navbar-toggler border-0 text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="fas fa-bars"></span>
-      </button>
-
-      <!-- Itens do Menu -->
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a href="#about" class="nav-link text-warning fw-bold">Sobre</a></li>
-          <li class="nav-item"><a href="#projects" class="nav-link text-warning fw-bold">Projetos</a></li>
-          <li class="nav-item"><a href="#contact" class="nav-link text-warning fw-bold">Contato</a></li>
-        </ul>
-      </div>
-
-      <!-- Botão Dark/Light -->
-      <button class="btn-theme ms-3" id="themeToggle">
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">marcos<span>.</span>oliveira</a>
+    <ul class="nav-links">
+      <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+      <li><a href="#projects" data-i18n="nav.projects">Projetos</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contato</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="lang-btn" id="langToggle">EN</button>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
         <i class="fas fa-moon"></i>
       </button>
-
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
     </div>
-  </nav>
-</header>
+  </div>
+</nav>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" data-i18n="nav.about" onclick="closeMobile()">Sobre</a>
+  <a href="#projects" data-i18n="nav.projects" onclick="closeMobile()">Projetos</a>
+  <a href="#contact" data-i18n="nav.contact" onclick="closeMobile()">Contato</a>
+</div>
 
-<div style="padding-top: 80px;"></div>
-
-<main class="container py-5">
-
-<!-- SOBRE -->
-<section id="about" class="my-5">
-  <div class="row align-items-center">
-    <div class="col-md-4 text-center mb-4">
-      <img src="./assets/1694176748083.jpg" class="rounded-circle img-fluid shadow" width="300" heigth="230">
+<!-- HERO -->
+<main>
+<div class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-tag" data-i18n="hero.tag">Backend Developer</div>
+    <h1><em data-i18n="hero.h1a">Soluções</em> <span data-i18n="hero.h1b">backend de alta</span><br><em data-i18n="hero.h1c">confiabilidade</em></h1>
+    <p class="hero-desc" data-i18n="hero.desc">
+      Especializado em ERP, CRM e plataformas financeiras escaláveis.
+      Construo sistemas que geram valor real através de dados e performance.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary" data-i18n="hero.cta1">Ver Projetos</a>
+      <a href="#contact" class="btn-outline" data-i18n="hero.cta2">Falar Comigo</a>
     </div>
-    <div class="col-md-8">
-      <h2 class="fw-bold mb-3">Sobre Mim</h2>
-      <p class="fs-5">
-        Sou desenvolvedor backend especializado em soluções financeiras de alta confiabilidade. 
-        Atuo na construção e sustentação de plataformas com focos em ERP, CRM, garantindo 
-        escalabilidade, segurança e performance, geração de valor através de dados.
+  </div>
+  <div class="hero-image">
+    <div class="hero-photo-wrap">
+      <img src="./assets/1694176748083.jpg" alt="Marcos Oliveira">
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label" data-i18n="about.label">// sobre mim</div>
+  <h2 class="section-title" data-i18n="about.title">Quem sou eu</h2>
+  <div class="section-divider"></div>
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p data-i18n="about.p1">
+        Sou desenvolvedor <strong>backend</strong> especializado em soluções financeiras de alta confiabilidade.
+        Atuo na construção e sustentação de plataformas com foco em <strong>ERP</strong> e <strong>CRM</strong>,
+        garantindo escalabilidade, segurança e performance.
       </p>
-      <p class="fs-5">
-        Tecnologias principais: <strong>PHP</strong>, <strong>MySQL</strong>, <strong>Java</strong>, <strong>Bash</strong>, <strong>APIs REST</strong>.
+      <p data-i18n="about.p2">
+        Tenho paixão por gerar valor através de dados bem estruturados e arquiteturas eficientes.
+        Cada sistema que construo é pensado para durar e escalar.
       </p>
+      <div class="skills-list">
+        <h3 data-i18n="about.skillsLabel">Stack principal</h3>
+        <div class="skills-grid">
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">GO</span>
+          <span class="skill-tag">REST API's</span>
+          <span class="skill-tag">TypeScript / Javascript</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Node</span>
+        </div>
+      </div>
+    </div>
+    <div class="fade-in">
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label" data-i18n="about.stat1">Anos de experiência</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label" data-i18n="about.stat2">Projetos no portfólio</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">∞</div>
+          <div class="stat-label" data-i18n="about.stat3">Linhas de código</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label" data-i18n="about.stat4">Foco em qualidade</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-quote fade-in" data-i18n="about.quote">
+      "Código limpo não é apenas uma questão de estilo — é uma questão de respeito pelo próximo desenvolvedor."
     </div>
   </div>
 </section>
 
-<!-- PROJETOS -->
-<section id="projects" class="my-5">
-  <h2 class="fw-bold mb-4">Projetos</h2>
-  <div class="row g-4">
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label" data-i18n="projects.label">// projetos</div>
+  <h2 class="section-title" data-i18n="projects.title">O que construí</h2>
+  <div class="section-divider"></div>
+  <div class="projects-grid">
 
-    <div class="col-md-6 col-lg-4">
-      <div class="project-card shadow">
-        <img src="./assets/erp_restrito.png" class="img-fluid rounded mb-3">
-        <h3 class="fw-bold">ERP Comissionamento</h3>
-        <p>ERP interno para cálculo automático de comissões multi-nível, analise de resultados e gerenciamento de demais áreas.</p>
+    <div class="project-card fade-in">
+      <div class="project-img-placeholder">
+        <i class="fas fa-chart-bar"></i>
+      </div>
+      <div class="project-body">
+        <div class="project-number">01</div>
+        <h3 class="project-title" data-i18n="proj1.title">ERP Comissionamento</h3>
+        <p class="project-desc" data-i18n="proj1.desc">
+          ERP interno para cálculo automático de comissões multi-nível,
+          análise de resultados e gerenciamento de demais áreas da empresa.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="project-tag">PHP</span>
+            <span class="project-tag">MySQL</span>
+            <span class="project-tag">ERP</span>
+          </div>
+          <span style="color:var(--muted); font-size:13px;" data-i18n="proj.private">Privado</span>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-6 col-lg-4">
-      <div class="project-card shadow">
-         <img src="./assets/lms_restrito.png" class="img-fluid rounded mb-3">
-        <h3 class="fw-bold">LMS</h3>
-        <p>Sistema para disponibilização de cursos, onde a empresa pode vender cursos e disponibilizar para os colaboradores.</p>
+    <div class="project-card fade-in">
+      <div class="project-img-placeholder">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div class="project-body">
+        <div class="project-number">02</div>
+        <h3 class="project-title" data-i18n="proj2.title">LMS — Plataforma EAD</h3>
+        <p class="project-desc" data-i18n="proj2.desc">
+          Sistema para disponibilização e venda de cursos online.
+          A empresa pode vender cursos externos e disponibilizar trilhas internas para colaboradores.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="project-tag">NestJS</span>
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">LMS</span>
+          </div>
+          <a href="https://github.com/marcosx3/ead-nest" target="_blank" class="project-link" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-6 col-lg-4">
-      <div class="project-card shadow">
-        <img src="./assets/compliance.png" class="img-fluid rounded mb-3">
-        <h3 class="fw-bold">Canal de denuncias</h3>
-        <p>Canal de denuncias para Compliance empresarial.</p>
-        <a id="canal_denuncias" href="https://github.com/marcosx3/compliance">Venha Conferir</a>
+    <div class="project-card fade-in">
+      <div class="project-img-placeholder">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <div class="project-body">
+        <div class="project-number">03</div>
+        <h3 class="project-title" data-i18n="proj3.title">Canal de Denúncias</h3>
+        <p class="project-desc" data-i18n="proj3.desc">
+          Canal de denúncias anônimo para Compliance empresarial,
+          permitindo que colaboradores reportem irregularidades com segurança e confidencialidade.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="project-tag">Compliance</span>
+            <span class="project-tag">PHP</span>
+          </div>
+          <a href="https://github.com/marcosx3/compliance" target="_blank" class="project-link" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- CONTATO -->
-<section id="contact" class="text-center my-5">
-  <h2 class="fw-bold mb-4">Contato</h2>
-
-  <div class="d-flex justify-content-center gap-4 fs-1">
-    <a href="https://wa.me/5531997760109" target="_blank" class="text-warning"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://www.linkedin.com/in/marcosoliveirassilva/" target="_blank" class="text-warning"><i class="fab fa-linkedin"></i></a>
-    <a href="https://github.com/marcosx3" target="_blank" class="text-warning"><i class="fab fa-github"></i></a>
-    <a href="mailto:marcos-oliveirasilva@hotmail.com" class="text-warning"><i class="fas fa-envelope"></i></a>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap fade-in">
+    <div class="contact-text">
+      <div class="section-label" data-i18n="contact.label">// contato</div>
+      <h2 data-i18n="contact.title">Vamos construir algo juntos?</h2>
+      <p data-i18n="contact.desc">Aberto a novas oportunidades, freelas e conversas sobre tecnologia. Respondo rápido!</p>
+      <a href="mailto:marcos-oliveirasilva@hotmail.com" class="btn-primary" data-i18n="contact.cta">Enviar E-mail</a>
+    </div>
+    <div class="social-links">
+      <a href="https://wa.me/5531997760109" target="_blank" class="social-link">
+        <i class="fab fa-whatsapp"></i>
+        <div>
+          <div class="social-name">WhatsApp</div>
+          <div class="social-handle">+55 31 9977-60109</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/marcosoliveirassilva/" target="_blank" class="social-link">
+        <i class="fab fa-linkedin"></i>
+        <div>
+          <div class="social-name">LinkedIn</div>
+          <div class="social-handle">marcosoliveirassilva</div>
+        </div>
+      </a>
+      <a href="https://github.com/marcosx3" target="_blank" class="social-link">
+        <i class="fab fa-github"></i>
+        <div>
+          <div class="social-name">GitHub</div>
+          <div class="social-handle">marcosx3</div>
+        </div>
+      </a>
+      <a href="mailto:marcos-oliveirasilva@hotmail.com" class="social-link">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <div class="social-name">E-mail</div>
+          <div class="social-handle">marcos-oliveirasilva@hotmail.com</div>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
-
 </main>
 
-<footer class="text-center p-3">
-  © 2025 Marcos Oliveira. Todos os direitos reservados.
+<footer>
+  <span>© 2025 Marcos Oliveira</span>
+  <span style="font-size:10px; letter-spacing:.06em;" data-i18n="footer.rights">Todos os direitos reservados.</span>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  const toggle = document.getElementById("themeToggle");
-  const body = document.body;
-
-  toggle.onclick = () => {
-    const current = body.getAttribute("data-theme");
-    body.setAttribute("data-theme", current === "light" ? "dark" : "light");
-    toggle.innerHTML = current === "light" ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  /* ── i18n ── */
+  const translations = {
+    pt: {
+      "nav.about": "Sobre",
+      "nav.projects": "Projetos",
+      "nav.contact": "Contato",
+      "hero.tag": "Backend Developer",
+      "hero.h1a": "Soluções",
+      "hero.h1b": "backend de alta",
+      "hero.h1c": "confiabilidade",
+      "hero.desc": "Especializado em ERP, CRM e plataformas financeiras escaláveis. Construo sistemas que geram valor real através de dados e performance.",
+      "hero.cta1": "Ver Projetos",
+      "hero.cta2": "Falar Comigo",
+      "about.label": "// sobre mim",
+      "about.title": "Quem sou eu",
+      "about.p1": 'Sou desenvolvedor <strong>backend</strong> especializado em soluções financeiras de alta confiabilidade. Atuo na construção e sustentação de plataformas com foco em <strong>ERP</strong> e <strong>CRM</strong>, garantindo escalabilidade, segurança e performance.',
+      "about.p2": "Tenho paixão por gerar valor através de dados bem estruturados e arquiteturas eficientes. Cada sistema que construo é pensado para durar e escalar.",
+      "about.skillsLabel": "Stack principal",
+      "about.stat1": "Anos de experiência",
+      "about.stat2": "Projetos no portfólio",
+      "about.stat3": "Linhas de código",
+      "about.stat4": "Foco em qualidade",
+      "about.quote": '"Código limpo não é apenas uma questão de estilo — é uma questão de respeito pelo próximo desenvolvedor."',
+      "projects.label": "// projetos",
+      "projects.title": "O que construí",
+      "proj1.title": "ERP Comissionamento",
+      "proj1.desc": "ERP interno para cálculo automático de comissões multi-nível, análise de resultados e gerenciamento de demais áreas da empresa.",
+      "proj2.title": "LMS — Plataforma EAD",
+      "proj2.desc": "Sistema para disponibilização e venda de cursos online. A empresa pode vender cursos externos e disponibilizar trilhas internas para colaboradores.",
+      "proj3.title": "Canal de Denúncias",
+      "proj3.desc": "Canal de denúncias anônimo para Compliance empresarial, permitindo que colaboradores reportem irregularidades com segurança e confidencialidade.",
+      "proj.private": "Privado",
+      "contact.label": "// contato",
+      "contact.title": "Vamos construir algo juntos?",
+      "contact.desc": "Aberto a novas oportunidades, freelas e conversas sobre tecnologia. Respondo rápido!",
+      "contact.cta": "Enviar E-mail",
+      "footer.rights": "Todos os direitos reservados."
+    },
+    en: {
+      "nav.about": "About",
+      "nav.projects": "Projects",
+      "nav.contact": "Contact",
+      "hero.tag": "Backend Developer",
+      "hero.h1a": "High-reliability",
+      "hero.h1b": "backend",
+      "hero.h1c": "solutions",
+      "hero.desc": "Specialized in ERP, CRM, and scalable financial platforms. I build systems that generate real value through data and performance.",
+      "hero.cta1": "View Projects",
+      "hero.cta2": "Get in Touch",
+      "about.label": "// about me",
+      "about.title": "Who I am",
+      "about.p1": 'I\'m a <strong>backend developer</strong> specialized in high-reliability financial solutions. I work on building and maintaining platforms focused on <strong>ERP</strong> and <strong>CRM</strong>, ensuring scalability, security, and performance.',
+      "about.p2": "I\'m passionate about generating value through well-structured data and efficient architectures. Every system I build is designed to last and scale.",
+      "about.skillsLabel": "Main stack",
+      "about.stat1": "Years of experience",
+      "about.stat2": "Portfolio projects",
+      "about.stat3": "Lines of code",
+      "about.stat4": "Focus on quality",
+      "about.quote": '"Clean code is not just a matter of style — it\'s a matter of respect for the next developer."',
+      "projects.label": "// projects",
+      "projects.title": "What I've built",
+      "proj1.title": "Commissions ERP",
+      "proj1.desc": "Internal ERP for automatic multi-level commission calculation, results analysis and management of other company areas.",
+      "proj2.title": "LMS — E-learning Platform",
+      "proj2.desc": "System for publishing and selling online courses. Companies can sell external courses and provide internal learning paths for employees.",
+      "proj3.title": "Whistleblower Channel",
+      "proj3.desc": "Anonymous whistleblower channel for corporate compliance, allowing employees to safely and confidentially report irregularities.",
+      "proj.private": "Private",
+      "contact.label": "// contact",
+      "contact.title": "Let's build something together?",
+      "contact.desc": "Open to new opportunities, freelance projects, and conversations about tech. I reply fast!",
+      "contact.cta": "Send an Email",
+      "footer.rights": "All rights reserved."
+    }
   };
-</script>
 
+  let lang = 'pt';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l === 'pt' ? 'pt-BR' : 'en';
+    document.querySelector('#langToggle').textContent = l === 'pt' ? 'EN' : 'PT';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (translations[l][key] !== undefined) el.innerHTML = translations[l][key];
+    });
+  }
+
+  document.getElementById('langToggle').addEventListener('click', () => {
+    applyLang(lang === 'pt' ? 'en' : 'pt');
+  });
+
+  /* ── THEME ── */
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.body.getAttribute('data-theme') === 'light';
+    document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+    themeBtn.innerHTML = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  });
+
+  /* ── MOBILE MENU ── */
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  function closeMobile() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
